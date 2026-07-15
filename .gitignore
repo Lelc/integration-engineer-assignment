@@ -1,0 +1,12 @@
+.env
+.env.local
+.env.*.local
+vendor/
+node_modules/
+storage/*.key
+database/*.sqlite
+database/*.sqlite-journal
+.idea/
+.vscode/
+*.log
+.DS_Store
