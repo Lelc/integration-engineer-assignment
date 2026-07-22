@@ -62,7 +62,7 @@ export const columns: ColumnDef<Assessment>[] = [
         header: 'Assessment type',
     },
     {
-        accessorKey: 'jobTitle',
+        accessorKey: 'job_title',
         header: ({ column }) => {
             return (
                 <Button
