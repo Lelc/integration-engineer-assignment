@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDownIcon, MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,6 +9,27 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+
+function formatWithAt(date: Date) {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+    });
+
+    const parts = formatter.formatToParts(date);
+
+    const get = (type: Intl.DateTimeFormatPartTypes) =>
+        parts.find((p) => p.type === type)?.value ?? '';
+
+    const datePart = `${get('month')} ${get('day')}, ${get('year')}`;
+    const timePart = `${get('hour')}:${get('minute')} ${get('dayPeriod')}`;
+
+    return `${datePart} at ${timePart}`;
+}
 
 export type Assessment = {
     candidate_name: string;
@@ -23,19 +45,9 @@ export type Assessment = {
 export const columns: ColumnDef<Assessment>[] = [
     {
         accessorKey: 'candidate_name',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Candidate
-                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Candidate" />
+        ),
         cell: ({ row }) => {
             const assessment = row.original;
 
@@ -63,51 +75,21 @@ export const columns: ColumnDef<Assessment>[] = [
     },
     {
         accessorKey: 'job_title',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Job title
-                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Job title" />
+        ),
     },
     {
         accessorKey: 'status',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Status
-                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Status" />
+        ),
     },
     {
         accessorKey: 'submittedAt',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Submitted at
-                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
-        },
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Submitted at" />
+        ),
         cell: ({ row }) => {
             const assessment = row.original;
 
@@ -116,25 +98,18 @@ export const columns: ColumnDef<Assessment>[] = [
     },
     {
         accessorKey: 'deadline',
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() =>
-                        column.toggleSorting(column.getIsSorted() === 'asc')
-                    }
-                >
-                    Deadline
-                    <ArrowUpDownIcon className="ml-2 h-4 w-4" />
-                </Button>
-            );
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Dealine" />
+        ),
+        cell: ({ row }) => {
+            const assessment = row.original;
+
+            return formatWithAt(new Date(assessment.deadline));
         },
     },
     {
         id: 'actions',
-        cell: ({ row }) => {
-            const assessment = row.original;
-
+        cell: () => {
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

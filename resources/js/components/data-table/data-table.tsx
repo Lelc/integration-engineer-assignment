@@ -1,17 +1,15 @@
 import type {
     ColumnDef,
-    SortingState,
+    OnChangeFn,
     PaginationState,
+    SortingState,
 } from '@tanstack/react-table';
 import {
     flexRender,
     getCoreRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
-import { DataTablePagination } from '@/components/assessments/data-table-pagination';
+import { DataTablePagination } from '@/components/data-table/data-table-pagination';
 import {
     Table,
     TableBody,
@@ -24,27 +22,38 @@ import {
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    total: number;
+    pageCount: number;
+    pagination: PaginationState;
+    sorting: SortingState;
+    onPaginationChange: OnChangeFn<PaginationState>;
+    onSortingChange: OnChangeFn<SortingState>;
+    loading?: boolean;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    total,
+    pageCount,
+    pagination,
+    sorting,
+    onPaginationChange,
+    onSortingChange,
+    loading,
 }: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [pagination, setPagination] = useState<PaginationState>({
-        pageIndex: 0,
-        pageSize: 10,
-    });
-
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
 
-        onPaginationChange: setPagination,
-        onSortingChange: setSorting,
+        // server already paginates and sorts the data it returns
+        manualPagination: true,
+        manualSorting: true,
+        pageCount,
+
+        onPaginationChange,
+        onSortingChange,
 
         state: {
             pagination,
@@ -56,30 +65,37 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <DataTablePagination table={table} />
+            <DataTablePagination table={table} total={total} />
             <div className="overflow-hidden rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext(),
-                                                  )}
-                                        </TableHead>
-                                    );
-                                })}
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext(),
+                                              )}
+                                    </TableHead>
+                                ))}
                             </TableRow>
                         ))}
                     </TableHeader>
                     <TableBody>
-                        {rows.length ? (
+                        {loading ? (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
+                                    Loading...
+                                </TableCell>
+                            </TableRow>
+                        ) : rows.length ? (
                             rows.map((row) => (
                                 <TableRow
                                     key={row.id}
