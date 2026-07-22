@@ -301,6 +301,87 @@ home.form = homeForm
 /**
 * @see \Inertia\Controller::__invoke
 * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+export const createAssessment = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: createAssessment.url(options),
+    method: 'get',
+})
+
+createAssessment.definition = {
+    methods: ["get","head"],
+    url: '/create-assessment',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+createAssessment.url = (options?: RouteQueryOptions) => {
+    return createAssessment.definition.url + queryParams(options)
+}
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+createAssessment.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: createAssessment.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+createAssessment.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: createAssessment.url(options),
+    method: 'head',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+const createAssessmentForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: createAssessment.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+createAssessmentForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: createAssessment.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+createAssessmentForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: createAssessment.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+createAssessment.form = createAssessmentForm
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({

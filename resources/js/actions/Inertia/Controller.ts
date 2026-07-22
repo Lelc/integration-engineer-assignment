@@ -82,6 +82,86 @@ Controller980bb49ee7ae63891f1d891d2fbcf1c9.form = Controller980bb49ee7ae63891f1d
 /**
 * @see \Inertia\Controller::__invoke
 * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+const Controllerd18cac5b104fb180db6f7002dab375ae = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controllerd18cac5b104fb180db6f7002dab375ae.url(options),
+    method: 'get',
+})
+
+Controllerd18cac5b104fb180db6f7002dab375ae.definition = {
+    methods: ["get","head"],
+    url: '/create-assessment',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+Controllerd18cac5b104fb180db6f7002dab375ae.url = (options?: RouteQueryOptions) => {
+    return Controllerd18cac5b104fb180db6f7002dab375ae.definition.url + queryParams(options)
+}
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+Controllerd18cac5b104fb180db6f7002dab375ae.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controllerd18cac5b104fb180db6f7002dab375ae.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+Controllerd18cac5b104fb180db6f7002dab375ae.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: Controllerd18cac5b104fb180db6f7002dab375ae.url(options),
+    method: 'head',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+const Controllerd18cac5b104fb180db6f7002dab375aeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Controllerd18cac5b104fb180db6f7002dab375ae.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+Controllerd18cac5b104fb180db6f7002dab375aeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Controllerd18cac5b104fb180db6f7002dab375ae.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+* @route '/create-assessment'
+*/
+Controllerd18cac5b104fb180db6f7002dab375aeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: Controllerd18cac5b104fb180db6f7002dab375ae.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+Controllerd18cac5b104fb180db6f7002dab375ae.form = Controllerd18cac5b104fb180db6f7002dab375aeForm
+/**
+* @see \Inertia\Controller::__invoke
+* @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
 * @route '/dashboard'
 */
 const Controller42a740574ecbfbac32f8cc353fc32db9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -247,6 +327,7 @@ Controllere19ee86e9cf603ce1a59a1ec5d21dec5.form = Controllere19ee86e9cf603ce1a59
 */
 const Controller = {
     '/': Controller980bb49ee7ae63891f1d891d2fbcf1c9,
+    '/create-assessment': Controllerd18cac5b104fb180db6f7002dab375ae,
     '/dashboard': Controller42a740574ecbfbac32f8cc353fc32db9,
     '/settings/appearance': Controllere19ee86e9cf603ce1a59a1ec5d21dec5,
 }
