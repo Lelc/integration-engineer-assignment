@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Database\Factories\AssessmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Assessment extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    /** @use HasFactory<AssessmentFactory> */
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'uuid',
