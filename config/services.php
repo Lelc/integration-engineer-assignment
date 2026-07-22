@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'sparkhire' => [
+        'base_url' => env('SPARKHIRE_API_BASE_URL'),
+        'client_id' => env('SPARKHIRE_CLIENT_ID'),
+        'client_secret' => env('SPARKHIRE_CLIENT_SECRET'),
+        'scope' => '*',
+        'requester_email' => env('SPARKHIRE_REQUESTER_EMAIL'),
+        'webhook_secret' => env('SPARKHIRE_WEBHOOK_SECRET'),
+    ],
+
 ];
