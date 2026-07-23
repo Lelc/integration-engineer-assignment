@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import type { PaginationState, SortingState } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
-import { columns } from '@/components/assessments/columns';
+import { getColumns } from '@/components/assessments/columns';
 import CreateOneWay from '@/components/create-one-way';
 import { DataTable } from '@/components/data-table/data-table';
 import {
@@ -25,7 +25,14 @@ export default function AssessmentList() {
         setPage,
         setPerPage,
         setOrderBy,
+        refresh,
     } = useAssessments();
+
+    const handleDelete = useCallback(() => {
+        refresh();
+    }, [refresh]);
+
+    const columns = useMemo(() => getColumns(handleDelete), [handleDelete]);
 
     const pagination: PaginationState = useMemo(
         () => ({ pageIndex: currentPage - 1, pageSize: perPage }),

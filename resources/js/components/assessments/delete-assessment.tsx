@@ -14,7 +14,13 @@ import {
 } from '@/components/ui/alert-dialog';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 
-export default function DeleteAssessment({ uuid }: { uuid: string }) {
+export default function DeleteAssessment({
+    uuid,
+    onDeleted,
+}: {
+    uuid: string;
+    onDeleted: (uuid: string) => void;
+}) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -30,6 +36,7 @@ export default function DeleteAssessment({ uuid }: { uuid: string }) {
                 toast.error('Failed to delete assessment.');
             } else {
                 toast.success('Assessment deleted');
+                onDeleted(uuid);
             }
         } catch (error) {
             toast.error('Failed to delete assessment.');

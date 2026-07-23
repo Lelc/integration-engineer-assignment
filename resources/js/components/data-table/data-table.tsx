@@ -47,7 +47,6 @@ export function DataTable<TData, TValue>({
         columns,
         getCoreRowModel: getCoreRowModel(),
 
-        // server already paginates and sorts the data it returns
         manualPagination: true,
         manualSorting: true,
         pageCount,
