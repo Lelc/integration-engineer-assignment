@@ -44,7 +44,14 @@ readonly class AssessmentService
         return (bool) $assessment?->delete();
     }
 
-    private function createAssessmentFromPayload(array $attributes): ?Assessment
+    public function restore(string $uuid): bool
+    {
+        $assessment = Assessment::onlyTrashed()->where('uuid', $uuid)->first();
+
+        return (bool) $assessment?->restore();
+    }
+
+    public function createAssessmentFromPayload(array $attributes): ?Assessment
     {
         return DB::transaction(function () use ($attributes): ?Assessment {
             $assessment = Assessment::query()
