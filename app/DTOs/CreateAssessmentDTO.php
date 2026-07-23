@@ -8,11 +8,11 @@ use WendellAdriel\ValidatedDTO\ValidatedDTO;
 
 final class CreateAssessmentDTO extends ValidatedDTO
 {
-    public readonly string $candidate_name;
-    public readonly string $candidate_email;
-    public readonly string $job_uuid;
-    public readonly string $question_set_uuid;
-    public readonly string $deadline;
+    public string $candidate_name;
+    public string $candidate_email;
+    public string $job_uuid;
+    public string $question_set_uuid;
+    public string $deadline;
 
     protected function rules(): array
     {

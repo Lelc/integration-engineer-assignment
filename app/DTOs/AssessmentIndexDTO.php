@@ -8,9 +8,9 @@ use WendellAdriel\ValidatedDTO\ValidatedDTO;
 
 final class AssessmentIndexDTO extends ValidatedDTO
 {
-    public readonly int $page;
-    public readonly int $per_page;
-    public readonly array $order_by;
+    public int $page;
+    public int $per_page;
+    public array $order_by;
 
     protected function rules(): array
     {
