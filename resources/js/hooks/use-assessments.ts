@@ -27,8 +27,8 @@ export function useAssessments() {
         page: 1,
         per_page: 10,
         order_by: {
-            column: 'created_at',
-            direction: 'desc',
+            column: 'deadline',
+            direction: 'asc',
         },
     });
 

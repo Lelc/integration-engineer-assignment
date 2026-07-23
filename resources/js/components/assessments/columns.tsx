@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
+import DeleteAssessment from '@/components/assessments/delete-assessment';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,7 @@ function formatWithAt(date: Date) {
 }
 
 export type Assessment = {
+    uuid: string;
     candidate_name: string;
     candidate_email: string;
     candidate_avatar: string;
@@ -86,7 +88,7 @@ export const columns: ColumnDef<Assessment>[] = [
         ),
     },
     {
-        accessorKey: 'submittedAt',
+        accessorKey: 'submitted_at',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Submitted at" />
         ),
@@ -109,7 +111,9 @@ export const columns: ColumnDef<Assessment>[] = [
     },
     {
         id: 'actions',
-        cell: () => {
+        cell: ({ row }) => {
+            const assessment = row.original;
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -120,8 +124,8 @@ export const columns: ColumnDef<Assessment>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuItem>View </DropdownMenuItem>
-                        <DropdownMenuItem variant={'destructive'}>
-                            Delete
+                        <DropdownMenuItem asChild>
+                            <DeleteAssessment uuid={assessment.uuid} />
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
