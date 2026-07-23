@@ -75,7 +75,14 @@ export function CreateAssessmentForm() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                if (data.uuid) {
+                    toast.success('One-Way interview created!');
+
+                    form.setValues({
+                        candidate_name: '',
+                        candidate_email: '',
+                    });
+                }
             })
             .catch((e) => {
                 console.error(e);
