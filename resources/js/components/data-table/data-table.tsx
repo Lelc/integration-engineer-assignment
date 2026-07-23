@@ -64,7 +64,11 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <DataTablePagination table={table} total={total} />
+            <DataTablePagination
+                table={table}
+                pagination={pagination}
+                total={total}
+            />
             <div className="overflow-hidden rounded-md border">
                 <Table>
                     <TableHeader>

@@ -1,4 +1,4 @@
-import type { Table } from '@tanstack/react-table';
+import type { PaginationState, Table } from '@tanstack/react-table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -12,14 +12,19 @@ import {
 
 interface DataTablePaginationProps<TData> {
     table: Table<TData>;
+    pagination: PaginationState;
     total: number;
 }
 
 export function DataTablePagination<TData>({
     table,
+    pagination,
     total,
 }: DataTablePaginationProps<TData>) {
-    const { pageIndex, pageSize } = table.getState().pagination;
+    const { pageIndex, pageSize } = pagination;
+
+    const canPreviousPage = pageIndex > 0;
+    const canNextPage = pageIndex < table.getPageCount() - 1;
 
     const from = total === 0 ? 0 : pageIndex * pageSize + 1;
     const to = Math.min(total, (pageIndex + 1) * pageSize);
@@ -57,7 +62,7 @@ export function DataTablePagination<TData>({
                             size="icon"
                             className="size-8"
                             onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
+                            disabled={!canPreviousPage}
                         >
                             <span className="sr-only">Go to previous page</span>
                             <ChevronLeft />
@@ -68,7 +73,7 @@ export function DataTablePagination<TData>({
                             size="icon"
                             className="size-8"
                             onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
+                            disabled={!canNextPage}
                         >
                             <span className="sr-only">Go to next page</span>
                             <ChevronRight />

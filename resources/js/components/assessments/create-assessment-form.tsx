@@ -293,6 +293,7 @@ export function CreateAssessmentForm() {
                 <Link
                     href="/"
                     className={cn(buttonVariants({ variant: 'secondary' }))}
+                    disabled={loading}
                 >
                     Cancel
                 </Link>
