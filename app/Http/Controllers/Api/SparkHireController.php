@@ -13,6 +13,13 @@ class SparkHireController extends Controller
 {
     public function __construct(private readonly SparkHireService $service) {}
 
+    public function assessmentItem(string $uuid)
+    {
+        $assessmentItem = $this->service->assessmentItem($uuid);
+
+        return response()->json($assessmentItem);
+    }
+
     public function jobs(): JsonResponse
     {
         $jobs = $this->service->jobs();
@@ -34,4 +41,5 @@ class SparkHireController extends Controller
 
         return response()->json();
     }
+
 }

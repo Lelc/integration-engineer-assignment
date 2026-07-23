@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Cache;
 
 readonly class SparkHireService implements SparkHireServiceInterface
 {
-    public function __construct(private SparkHireClient $client)
-    {
-    }
+    public function __construct(private SparkHireClient $client) {}
 
     public function createAssessment(CreateAssessmentDTO $dto): ?array
     {
@@ -23,6 +21,15 @@ readonly class SparkHireService implements SparkHireServiceInterface
             ],
             'due_at' => $dto->deadline,
         ]);
+    }
+
+    public function assessmentItem(string $uuid): ?array
+    {
+        return $this->client->request(
+            'GET',
+            "/partners/candidate_assessment_items/$uuid",
+            ['load' => ['ai_review', 'ai_summary']]
+        );
     }
 
     public function jobs(): ?array
@@ -40,7 +47,7 @@ readonly class SparkHireService implements SparkHireServiceInterface
             $response = $this->client->request(
                 'GET',
                 '/partners/library/question_sets/all',
-                ['type[]' => 'one_way']
+                ['type' => ['one_way']]
             );
 
             return $response ?? Cache::get('sparkhire_questionSets');

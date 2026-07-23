@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('assessments', AssessmentController::class)->except('update');
 
 Route::prefix('/sparkhire')->group(function () {
+    Route::get('/assessment-item/{uuid}', [SparkHireController::class, 'assessmentItem'])->name('sparkhire.assessment-item');
     Route::get('/jobs', [SparkHireController::class, 'jobs'])->name('sparkhire.jobs');
     Route::get('/question-sets', [SparkHireController::class, 'questionSets'])->name('sparkhire.question-sets');
 });
