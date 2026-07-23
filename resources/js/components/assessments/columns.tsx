@@ -1,8 +1,9 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
+import { CandidateAvatar } from '@/components/assessments/candidate-avatar';
 import DeleteAssessment from '@/components/assessments/delete-assessment';
+import ViewAssessment from '@/components/assessments/view-assessment';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -58,14 +59,10 @@ export function getColumns(
 
                 return (
                     <div className="flex items-center gap-2 font-medium">
-                        <Avatar>
-                            <AvatarImage src={assessment.candidate_avatar} />
-                            <AvatarFallback>
-                                {assessment.candidate_name
-                                    .charAt(0)
-                                    .toUpperCase()}
-                            </AvatarFallback>
-                        </Avatar>
+                        <CandidateAvatar
+                            name={assessment.candidate_name}
+                            avatar={assessment.candidate_avatar}
+                        />
                         <div>
                             <p>{assessment.candidate_name}</p>
                             <p className={'font-normal'}>
@@ -130,7 +127,9 @@ export function getColumns(
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuItem>View </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                                <ViewAssessment uuid={assessment.uuid} />
+                            </DropdownMenuItem>
                             <DropdownMenuItem asChild>
                                 <DeleteAssessment
                                     uuid={assessment.uuid}
