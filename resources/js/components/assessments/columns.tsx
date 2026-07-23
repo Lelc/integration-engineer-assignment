@@ -100,7 +100,9 @@ export function getColumns(
             cell: ({ row }) => {
                 const assessment = row.original;
 
-                return assessment.submitted_at ?? '-';
+                return assessment.submitted_at
+                    ? formatWithAt(new Date(assessment.submitted_at))
+                    : '-';
             },
         },
         {
