@@ -52,8 +52,26 @@ class SparkHireClient
 
     private function getAccessToken(): string
     {
-        return Cache::remember(self::SPARKHIRE_ACCESS_TOKEN, now()->addMinutes(225), function () {
-            return $this->fetchNewAccessToken();
+        $token = Cache::get(self::SPARKHIRE_ACCESS_TOKEN);
+        if ($token !== null) {
+            return $token;
+        }
+
+        return Cache::lock( self::SPARKHIRE_TOKEN_LOCK , 10)->block(5, function () {
+            $token = Cache::get(self::SPARKHIRE_ACCESS_TOKEN);
+            if ($token !== null) {
+                return $token;
+            }
+
+            $token = $this->fetchNewAccessToken();
+
+            Cache::put(
+                self::SPARKHIRE_ACCESS_TOKEN,
+                $token,
+                now()->addMinutes(225),
+            );
+
+            return $token;
         });
     }
 
