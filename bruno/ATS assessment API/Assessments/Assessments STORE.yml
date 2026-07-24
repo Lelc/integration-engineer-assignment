@@ -1,0 +1,25 @@
+info:
+  name: Assessments STORE
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/assessments"
+  body:
+    type: json
+    data: |-
+      {
+        "candidate_name": "Test Name",
+        "candidate_email": "email@fake-mail.com",
+        "job_uuid": "0d9778d4-3799-486b-a5ed-908ae9834d61",
+        "question_set_uuid": "571ed639-7698-4e68-8b54-842fc1f10da2",
+        "deadline": "5"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

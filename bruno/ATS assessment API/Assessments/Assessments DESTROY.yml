@@ -1,0 +1,15 @@
+info:
+  name: Assessments DESTROY
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/api/assessments/eda77caf-6330-470f-ac2a-82a7572cff97"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

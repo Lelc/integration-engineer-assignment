@@ -210,6 +210,9 @@ If you run out of time, add a short **Notes** section on what you'd do next.
 - Assessment data persisted locally and synchronized via webhooks
 
 ## Notes
+
+A Bruno collection is included in the `bruno/` directory for testing the local API.
+
 Future improvements if it were a long-term project:
 
 - Install [phpinsights](https://github.com/nunomaduro/phpinsights) or similar to enforce code quality.

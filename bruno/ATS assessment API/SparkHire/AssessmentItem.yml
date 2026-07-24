@@ -1,0 +1,15 @@
+info:
+  name: AssessmentItem
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/sparkhire/assessment-item/ab5755ec-40cf-4602-9ec6-ab1a3dc1257b"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
