@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 class SparkHireClient
 {
     const string SPARKHIRE_ACCESS_TOKEN = 'sparkhire_access_token';
+    const string SPARKHIRE_TOKEN_LOCK = 'sparkhire_token_lock';
 
     /**
      * @throws SparkHireException
