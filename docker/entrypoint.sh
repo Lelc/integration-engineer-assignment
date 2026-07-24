@@ -10,10 +10,18 @@ mkdir -p /var/www/html/storage/framework/sessions \
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R ug+rwx /var/www/html/storage /var/www/html/bootstrap/cache
 
-if ! grep -q "^APP_KEY=base64:" /var/www/html/.env; then
-    php artisan key:generate --force
-fi
+git config --global --add safe.directory /var/www/html || true
 
-php artisan migrate --force
+if [ "${CONTAINER_ROLE}" != "queue" ]; then
+    if [ ! -d "/var/www/html/vendor" ]; then
+        composer install --no-interaction --optimize-autoloader
+    fi
+
+    if ! grep -q "^APP_KEY=base64:" /var/www/html/.env; then
+        php artisan key:generate --force
+    fi
+
+    php artisan migrate --force
+fi
 
 exec "$@"

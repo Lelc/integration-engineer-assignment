@@ -72,6 +72,8 @@ services:
         depends_on:
             mysql:
                 condition: service_healthy
+        environment:
+            CONTAINER_ROLE: queue
         networks:
             - laravel
 
