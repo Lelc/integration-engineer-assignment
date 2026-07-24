@@ -201,7 +201,15 @@ No multi-user auth required.
 
 If you run out of time, add a short **Notes** section on what you'd do next.
 
-## NOTES
+## Architecture
+
+- Laravel 13 backend exposing a local REST API
+- React frontend consuming only the local API
+- Spark Hire accessed exclusively by the backend
+- Webhooks processed asynchronously through queues
+- Assessment data persisted locally and synchronized via webhooks
+
+## Notes
 Future improvements if it were a long-term project:
 
 - Install [phpinsights](https://github.com/nunomaduro/phpinsights) or similar to enforce code quality.
