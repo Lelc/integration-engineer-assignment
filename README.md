@@ -44,11 +44,114 @@ Spark Hire must POST to a public HTTPS URL. Use a free tunnel ([ngrok](https://n
 
 ## Running the code
 
-*Update this section with your setup instructions.*
+### Requirements
 
-Include how to run the API + frontend, configure `.env`, run migrations, set up a tunnel, and register webhooks.
+- Docker and Docker Compose
 
-**Optional but helpful:** a short demo video walking through setup, the main UI flows, and anything non-obvious (logs, webhook events, etc.). Add the link here or in your submission email.
+---
+
+### Getting started
+
+#### Generate credentials 
+Visit [Custom Integration V2 page](https://app.sparkhire.com/company/settings/user/integrations/v2/custom_integration_v2) to create your client credentials.   
+They'll be used later for configuring SPARKHIRE_CLIENT_ID and SPARKHIRE_CLIENT_SECRET variables in your .env
+
+#### Create a tunnel
+
+> [!NOTE]
+> The following instructions are for [ngrok](https://ngrok.com/) and Linux, but feel free to use your options of choice  
+
+> [!WARNING]
+> These instructions are encountered in [ngrok's documentation](https://dashboard.ngrok.com/get-started/setup/linux) so you can follow them there.  
+>
+> However, keep in mind that it is needed to use port 8000 in step 3
+
+First create your ngrok account: [Signup](https://dashboard.ngrok.com/signup)
+
+1. Install ngrok via Apt with the following command:
+    ```bash
+    curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+      | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+      && echo "deb https://ngrok-agent.s3.amazonaws.com bookworm main" \
+      | sudo tee /etc/apt/sources.list.d/ngrok.list \
+      && sudo apt update \
+      && sudo apt install ngrok
+    ```
+2. Add your authtoken
+    
+    You can see $YOUR_AUTHTOKEN at [setup page](https://dashboard.ngrok.com/get-started/setup/linux) or at [your-authtoken page](https://dashboard.ngrok.com/get-started/your-authtoken) 
+    ```bash
+    ngrok config add-authtoken $YOUR_AUTHTOKEN
+    ```
+3. Get a public URL for your app
+    
+    You can see $YOUR_DEVDOMAIN at [setup page](https://dashboard.ngrok.com/get-started/setup/linux) in step 3 or at [domains page](https://dashboard.ngrok.com/domains)
+    ```bash
+    ngrok http --url=$YOUR_DEVDOMAIN 8000
+    ```
+   
+#### Configure webhook
+
+> [!TIP]
+> You can configure your integration's webhook later if you prefer 
+>- Configuring it before the **Installation** section avoids you having to revisit your .env file later
+>- Configuring it after the **Installation** section avoids you having to go back to [configure webhooks page](https://app.sparkhire.com/company/settings/user/integrations/v2/custom_integration_v2/configure/webhooks) to test and enable the webhook
+
+
+1. Access [configure webhooks page](https://app.sparkhire.com/company/settings/user/integrations/v2/custom_integration_v2/configure/webhooks)
+2. Click in `Add Webhook`
+3. Fill the inputs
+    
+    you'll need your $YOUR_DEVDOMAIN from **Create a tunnel** section
+
+   | Input        | Value                                                                                                            |
+   |--------------|------------------------------------------------------------------------------------------------------------------|
+   | URL          | $YOUR_DEVDOMAIN/api/webhooks/sparkhire                                                                           |
+   | Description: | Description string                                                                                               |
+   | Auth secret: | Auth secret string <br> (will be also used later for configuring SPARKHIRE_WEBHOOK_SECRET variable in your .env) |
+    
+4. Click in `Create Webhook`
+5. After you finish **Installation** section you need to go back to [configure webhooks page](https://app.sparkhire.com/company/settings/user/integrations/v2/custom_integration_v2/configure/webhooks) so you can test and enable your webhook 
+
+---
+
+## Installation
+
+#### Clone the project
+
+```bash
+git clone https://github.com/Lelc/integration-engineer-assignment.git
+cd integration-engineer-assignment
+```
+
+#### Configure environment variables
+
+> [!TIP]
+> See the **Getting started** section for instructions on obtaining the required Spark Hire credentials.
+
+```bash
+cp .env.example .env
+```
+then using vim, nano or your IDE of choice you need to update `.env`
+
+| Variable                  | Value                                    |
+|---------------------------|------------------------------------------|
+| SPARKHIRE_CLIENT_ID       | Generated in **Getting Started** section |
+| SPARKHIRE_CLIENT_SECRET   | Generated in **Getting Started** section |
+| SPARKHIRE_REQUESTER_EMAIL | The same used in your sandbox login      |
+| SPARKHIRE_WEBHOOK_SECRET  | Generated in **Getting Started** section |
+
+#### Start the application
+
+```bash
+docker compose up -d
+```
+
+#### Access the application
+
+The frontend and API are served from the same application URL:
+
+ http://localhost:8000 
 
 ---
 
@@ -97,3 +200,15 @@ No multi-user auth required.
 - Can we run it from your README?
 
 If you run out of time, add a short **Notes** section on what you'd do next.
+
+## NOTES
+Future improvements if it were a long-term project:
+
+- Install [phpinsights](https://github.com/nunomaduro/phpinsights) or similar to enforce code quality.
+- Install [scramble](https://github.com/dedoc/scramble) or similar to generate API documentation for local endpoints. 
+- Increase test coverage.
+- setup CI pipeline.
+- Implement retry/backoff and dead-letter handling for failed queued jobs.
+- Add metrics and health checks for queue workers and webhook processing.
+- Add authentication and authorization for the local API if it were exposed publicly.
+- Make the frontend more closely match the provided Figma design.
